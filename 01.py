@@ -24,24 +24,14 @@ assert fuel(100756)==33583
 #%%
 data = [line.rstrip() for line in open('data/01.dat')]
 
-# %%
+# %% Part A
 ans_a=0
 for i in data:
     ans_a+=fuel(int(i))
 print(ans_a)
-# %%
 
-## Part B: Recursion
 
-#%%
-def fuel_recursion(mass):
-    if mass<=0:
-        return mass
-    else:
-        return fuel_recursion(fuel_recursion(mass))
-
-# %%
-
+# %% Part B
 ans_b=0
 for i in data:
     f=fuel(int(i))
