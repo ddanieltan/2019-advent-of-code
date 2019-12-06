@@ -1,6 +1,3 @@
-#%%
-import pandas as pd
-import numpy as np
 
 #%%
 with open('data/02.dat') as f:
@@ -57,5 +54,47 @@ a=data.copy()
 a[1]=12
 a[2]=2
 print(f'Part A:{process(a)[0]}')
+
+# %% Part B
+GOAL=19690720 # given by the question
+import random
+
+#%%
+#Combinations of Noun and Verb between 0 and 99
+history=[(100,100)]
+def random_noun_verb():
+    noun=100
+    verb=100
+    while (noun,verb) in history:
+        noun=random.randint(0,99)
+        verb=random.randint(0,99)
+    history.append((noun,verb))
+    return noun,verb
+
+
+#%%
+def test_noun_verb(data,noun,verb):
+    # Setting up noun and verb
+    input_=data.copy()
+    input_[1]=noun
+    input_[2]=verb
+
+    return process(input_)[0]
+
+#%%
+ans=0
+iteration=0
+while (ans!=GOAL and iteration<10000):
+    noun,verb=random_noun_verb()
+    ans=test_noun_verb(data,noun,verb)
+    print(f'Iter:{iteration}, Noun:{noun}, Verb:{verb}, Ans:{ans}')
+    iteration+=1
+    
+#Iter:440, Noun:62, Verb:55, Ans:19690720
+
+
+# %%
+# Part B
+print(f'Part B: {100*62+55}')
 
 # %%
