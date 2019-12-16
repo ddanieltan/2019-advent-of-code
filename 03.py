@@ -1,10 +1,4 @@
-#%%
-with open('data/03.dat') as f:
-    data=f.readlines()
 
-# %%
-instruc0=data[0].split(',')
-instruc1=data[1].split(',')
 
 # %%
 def update(instruction,coordinates):
@@ -57,8 +51,6 @@ line_t2=[(0,0)]
 for i in instruct_test_2:
     line_t2=update(i,line_t2)
 
-# %%
-set(instruc_test,instruct_test_2)
 
 # %%
 set(line_t) & set(line_t2)
@@ -72,7 +64,7 @@ def get_lowest_manh(dict_):
             continue
         else:
             x,y=i
-            distance=x+y
+            distance=abs(x)+abs(y)
             if distance<lowest_dist:
                 lowest_dist=distance
                 coord=i
@@ -99,3 +91,59 @@ man_dist=get_lowest_manh(set(l0) & set(l1))
 print(man_dist)
 
 # %%
+i0=['R98','U47','R26','D63','R33','U87','L62','D20','R33','U53','R51']
+i1=['U98','R91','D20','R16','D67','R40','U7','R15','U6','R7']
+l0=draw(i0)
+l1=draw(i1)
+man_dist=get_lowest_manh(set(l0) & set(l1))
+print(man_dist)
+
+# %% Part A
+
+#%% input data
+with open('data/03.dat') as f:
+    data=f.readlines()
+
+# %% answer
+instruc0=data[0].split(',')
+instruc1=data[1].split(',')
+
+#%%
+l0=draw(instruc0)
+l1=draw(instruc1)
+man_dist=get_lowest_manh(set(l0) & set(l1))
+print(man_dist)
+
+# %%
+def update_with_steps(instruction,coordinates):
+    """
+    Input: 1 Instruction eg. 'R75' (string),
+    List of coordinates (tuple)
+    Output: List of coordinates (tuples)
+    """
+    direction=instruction[0]
+    distance=int(instruction[1:])
+
+    latest_coord=coordinates[-1]
+    if direction=="R":
+        x,y=latest_coord
+        for i in range(distance):
+            new=(x+i+1,y)
+            coordinates.append(new)
+    if direction=="L":
+        x,y=latest_coord
+        for i in range(distance):
+            new=(x-(i+1),y)
+            coordinates.append(new)
+    if direction=="U":
+        x,y=latest_coord
+        for i in range(distance):
+            new=(x,y+i+1)
+            coordinates.append(new)
+    if direction=="D":
+        x,y=latest_coord
+        for i in range(distance):
+            new=(x,y-(i+1))
+            coordinates.append(new)
+    
+    return coordinates
