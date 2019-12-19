@@ -39,11 +39,50 @@ def intcode(input_):
 # Op code 99 ends the programme
 # Op codes can be single digit or multiple digit
 #%%
-def check_if_opcode_single_digit(opcode):
+def check_if_intcode_single_digit(opcode):
     if len(str(opcode))==1:
         return True
     else:
         return False
 
 # %%
-def opcode_single_digit(opcode):
+def process_intcode(fullcode):
+    output=fullcode.copy()
+    cursor=0
+    def process_opcode(opcode):
+        if opcode==99:
+            return
+        if opcode==1: #addition
+            p1=output[cursor+1]
+            p2=output[cursor+2]
+            dest=output[cursor+3]        
+            output[dest]=output[p1]+output[p2]
+            cursor+=4
+            # elif opcode==2:
+            #     output_[dest]=output_[op1]*output_[op2]
+            #     cursor+=4
+            # elif opcode==3:
+                
+            # else:
+            #     print(f'Error: {cursor}')
+            #     break
+    
+    while cursor < len(fullcode):
+        intcode=fullcode[cursor]
+        if len(str(intcode))==1:
+            opcode=intcode
+            process_opcode(opcode)
+        else:
+            opcode=int(str(intcode)[-2:])
+            process_opcode(opcode)
+    
+    return output
+
+#%%
+a='1002'
+
+#%%
+b=['1','1','1','3']
+process_intcode(b)
+
+# %%
